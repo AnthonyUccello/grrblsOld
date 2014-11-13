@@ -271,6 +271,10 @@ namespace LitJson
             get 
 			{
                 EnsureDictionary ();
+				if(inst_object[prop_name] == null)
+				{
+					NGUIDebug.Log("Error bad " + prop_name);
+				}
                 return inst_object[prop_name];
             }
             set 

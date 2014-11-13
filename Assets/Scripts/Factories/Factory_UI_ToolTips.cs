@@ -46,51 +46,52 @@ public static class Factory_UI_ToolTips {
 		int count = 0;
 		if(JsonData.JsonDataContainsKey(stats,"damage"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("damage",stats["damage"].ToString(),count);
 			count++;
-			Debug.Log((int)stats["damage"]);
 		}
 		if(JsonData.JsonDataContainsKey(stats,"health"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("health",stats["health"].ToString(),count);
 			count++;
-			Debug.Log((int)stats["health"]);
 		}
 		if(JsonData.JsonDataContainsKey(stats,"dodge"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("dodge",stats["dodge"].ToString(),count);
 			count++;
-			Debug.Log((int)stats["dodge"]);
 		}
 		if(JsonData.JsonDataContainsKey(stats,"attackSpeed"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("attackSpeed",stats["attackSpeed"].ToString(),count);
 			count++;
-			Debug.Log((int)stats["attackSpeed"]);
 		}
 		if(JsonData.JsonDataContainsKey(stats,"critChance"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("critChance",stats["critChance"].ToString(),count);
 			count++;
-			Debug.Log((int)stats["critChance"]);
 		}
 		if(JsonData.JsonDataContainsKey(stats,"critMultiplier"))
 		{
-			createToolTipValue(count);
+			createToolTipValue("critMultiplier",stats["critMultiplier"].ToString(),count);
 			count++;
-			Debug.Log((double)stats["critMultiplier"]);
+		}
+		if(JsonData.JsonDataContainsKey(stats,"armor"))
+		{
+			createToolTipValue("armor",stats["armor"].ToString(),count);
+			count++;
 		}
 	}
 
 	//creates a single tooltip
-	static void createToolTipValue(int offsetCount)
+	static void createToolTipValue(string spriteName,string value,int offsetCount)
 	{
 		GameObject cardToolTipValue = NGUITools.AddChild(_cardToolTip,Resources.Load("Prefabs/UI/cardToolTipValue") as GameObject);
 		Transform t = _cardToolTip.transform;
-		cardToolTipValue.transform.localPosition = new Vector3(0,-70-(50*offsetCount),0);
+		cardToolTipValue.transform.localPosition = new Vector3(0,-70-(30*offsetCount),0);
 
 		//set values
 		UI_Controller_CardToolTipValue cardValues = cardToolTipValue.GetComponent<UI_Controller_CardToolTipValue>();
+		cardValues.icon.spriteName = spriteName;
+		cardValues.value.text = value;
 	}
 
 	//remove the tool tip from view
