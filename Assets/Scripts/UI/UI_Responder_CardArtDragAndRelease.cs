@@ -19,7 +19,7 @@ public class UI_Responder_CardArtDragAndRelease : UIDragDropItem {
 	protected void OnDragStart()
 	{
 		//tell card to hide tool tip
-		Debug.Log("Drag starting");
+		Factory_UI_ToolTips.hideToolTip();
 		base.OnDragStart();
 	}
 
@@ -27,10 +27,12 @@ public class UI_Responder_CardArtDragAndRelease : UIDragDropItem {
 	{			
 		Transform grrbl;
 		//if can't afford mana
-		if(_card.cost > Overseer_PlayerMana.playerMana)
+		/*if(_card.cost > Overseer_PlayerMana.playerMana)
 		{
 			Debug.Log("Cannot Afford");
-		}else if (surface != null && surface.tag=="grrblPlayer")
+		}else */
+
+		if (surface != null && surface.tag=="grrblPlayer")
 		{
 			grrbl = surface.gameObject.transform;
 			grrbl.GetComponent<Manager_Grrbl_Equipment>().equipItem(_card.itemId);

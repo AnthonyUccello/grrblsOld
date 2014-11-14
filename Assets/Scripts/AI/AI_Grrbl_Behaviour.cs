@@ -16,11 +16,12 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 	//todo
 	//Set target in range to NULL if target is null
 
-	public GameObject target;
+	public Transform raycaster;
 	public float speed = 1;
 	public float nextWayPointDistance = 3f;
 	public Transform endDestination;
 
+	private GameObject target;
 	private Seeker _seeker;
 	private Path _path;
 	private int _currentWayPoint = 0;
@@ -66,9 +67,9 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 	void scanForNewTarget()
 	{
 		Vector3 fwd = transform.TransformDirection(Vector3.forward);
-		Debug.DrawRay(transform.position,fwd*1000,Color.green);
+		Debug.DrawRay(raycaster.position,fwd*1000,Color.green);
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position,fwd,out hit,1000,_layerMaskTotal))
+		if(Physics.Raycast(raycaster.position,transform.forward,out hit,1000,_layerMaskTotal))
 		{
 			target = hit.transform.gameObject;
 		}else
@@ -138,7 +139,6 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 		{
 			_lastAttackTime = Time.time;
 			target.GetComponent<Manager_Grrbl_Stats>().acceptAttack(selfStats.attackPayload);
-
 		}
 	}
 

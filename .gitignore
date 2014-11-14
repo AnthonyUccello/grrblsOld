@@ -3,4 +3,11 @@ Library/
 *.userprefs
 *.sln
 *.meta
+*.pidb
+Build/
+*.orig
+*.suo
+*.user
+*.unityproj
+*.booproj
 Temp/

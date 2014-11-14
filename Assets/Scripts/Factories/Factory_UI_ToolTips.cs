@@ -41,7 +41,7 @@ public static class Factory_UI_ToolTips {
 	{
 		JsonData card =  cards[cardId];
 		JsonData item = items[(int)card["item_id"]];
-		Debug.Log("Item Is " + (string)item["stats"]);
+		//Debug.Log("Item Is " + (string)item["stats"]);
 		JsonData stats = JsonMapper.ToObject((string)item["stats"]);
 		int count = 0;
 		if(JsonData.JsonDataContainsKey(stats,"damage"))

@@ -20,7 +20,7 @@ public static class Factory_3D_GrrblSpawner
 	static Transform lane2PlayerSpawnSpot = GameObject.Find("lane2PlayerSpawnSpot").transform;
 	static Transform lane3PlayerSpawnSpot = GameObject.Find("lane3PlayerSpawnSpot").transform;
 
-	public static float spawnTimer = 3.0f;
+	public static float spawnTimer = 15.0f;
 	static string spawnPath = "Prefabs/3D/grrbl";
 
 	public static void beginSpawn()
@@ -119,13 +119,13 @@ public static class Factory_3D_GrrblSpawner
 		grrbl.GetComponent<AI_Grrbl_Behaviour>().init();
 		grrbl.tag="grrblAI";
 
-		//assign 2 items to the grrbl
+			//assign 2 items to the grrbl
 		assignRandomItemsToGrrbl(grrbl,2);
 	}
 
 	static void assignRandomItemsToGrrbl(GameObject grrbl,int amount)
 	{
-		int rand = Random.Range(0,4);
+		int rand = Random.Range(0,7);
 		if(rand==4)
 		{
 			rand = 3;
