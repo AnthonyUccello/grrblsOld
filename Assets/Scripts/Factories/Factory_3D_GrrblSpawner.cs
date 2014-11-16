@@ -48,7 +48,6 @@ public static class Factory_3D_GrrblSpawner
 
 	public static void spawnPlayerGrrbl(int lane)
 	{
-		Debug.Log("Spawning player");
 		//spawn player grrbls
 		GameObject grrbl = MonoBehaviour.Instantiate(Resources.Load(spawnPath)) as GameObject;
 		Vector3 spawnLocation = new Vector3(0,0,0);

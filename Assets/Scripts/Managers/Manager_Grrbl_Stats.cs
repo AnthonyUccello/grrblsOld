@@ -13,15 +13,21 @@ using LitJson;
 public class Manager_Grrbl_Stats : MonoBehaviour {
 
 	public GameObject hpBar;
+
+	//Stats
 	public int health = 100;
 	public int healthmax = 100;
 	public int damage = 25;
 	public int accuracy = 75;
-	public float dodgeChance = 10f;
 	public int critChance = 10;
+	public int armor = 0;
+	public int block = 0;
 	public double critBonusDamage = 1.5f;
-	public bool killed = false;
 	public double attackSpeed = 1.2f;
+	public double dodgeChance = 10f;
+
+	//flags
+	public bool killed = false;
 
 	Manager_Grrbl_Stats _target;
 	AI_Grrbl_Behaviour selfAI;
@@ -47,11 +53,17 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 
 	}
 
+	//Does all calculations for:
+	//Crit Chance
+	//Dodge chance
+	//Block chance
+	//Armor
+	//Bonus crit damage
 	public void acceptAttack(Dictionary<string,object> attackPayload)
 	{
 		int damage = (int)attackPayload["damage"];
 		//roll dodge
-		if(!attackConnected(attackPayload))
+		if(attackDodged(attackPayload))
 		{
 			return;
 		}
@@ -61,7 +73,7 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 			damage = (int)((double)damage*(double)attackPayload["critBonusDamage"]);
 		}
 		//take damage
-		health -= damage;
+		health -= cacluateDamage(damage);
 		updateHealthBar();
 		if(health<=0 && !killed)
 		{
@@ -69,6 +81,16 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 			selfAI.killSelf();
 		}
 		//check for dead and kill self
+	}
+
+	int cacluateDamage(int damage)
+	{
+		if(damage - armor < 0)
+		{
+			return 0;
+		}
+
+		return damage - armor;
 	}
 
 	void updateHealthBar()
@@ -80,45 +102,29 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 	}
 
 	//check for dogdge
-	private bool attackConnected(Dictionary<string,object> attackPayload)
+	private bool attackDodged(Dictionary<string,object> attackPayload)
 	{
-		float hit = Random.Range(0,100f) - (int)attackPayload["accuracy"] + dodgeChance;
-		if(hit <= accuracy)
+		double hit = Random.Range(0,100f) - (int)attackPayload["accuracy"] + dodgeChance;
+		if(accuracy >= hit)
 		{
-			return true;
+			return false;//it was a hit
 		}
-		return false;
+		return true;
 	}
 
 	private bool criticalHitOccured(Dictionary<string,object> attackPayload)
 	{
 		int chanceToCrit = Random.Range(0,100);
-		if(chanceToCrit<=(int)attackPayload["critChance"])
+		if((int)attackPayload["critChance"] >= chanceToCrit)
 		{
 			return true;
 		}
 		return false;
 	}
 
-	private IEnumerator selectTarget()
-	{
-		while(true)
-		{
-			if(_target==null)
-			{
-				//assign new target
-			}
-
-			yield return 0;
-		}
-
-	}
-
 	public Dictionary<string,object> attackPayload
 	{
-		get{
-			return _attackPayload;
-		}
+		get{return _attackPayload;}
 	}
 
 	public void updateStats(JsonData data)
@@ -131,6 +137,10 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 		{
 			dodgeChance+=(int)data["dodge"];
 		}
+		if(JsonData.JsonDataContainsKey(data,"block"))
+		{
+			block+=(int)data["block"];
+		}
 		if(JsonData.JsonDataContainsKey(data,"critChance"))
 		{
 			critChance+=(int)data["critChance"];
@@ -139,11 +149,19 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 		{
 			critBonusDamage+=(double)data["critBonusDamage"];
 		}
+		if(JsonData.JsonDataContainsKey(data,"attackSpeed"))
+		{
+			attackSpeed+=(double)data["attackSpeed"];
+		}
 		if(JsonData.JsonDataContainsKey(data,"health"))
 		{
 			health += (int)data["health"];
 			healthmax += (int)data["health"];
 			updateHealthBar();
+		}
+		if(JsonData.JsonDataContainsKey(data,"armor"))
+		{
+			critBonusDamage+=(int)data["armor"];
 		}
 		updatePayload();
 	}
@@ -157,7 +175,9 @@ public class Manager_Grrbl_Stats : MonoBehaviour {
 			{"dodgeChance",dodgeChance},
 			{"accuracy",accuracy},
 			{"critChance",critChance},
-			{"critBonusDamage",critBonusDamage}
+			{"critBonusDamage",critBonusDamage},
+			{"armor",armor},
+			{"block",block}
 		};
 	}
 
