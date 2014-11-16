@@ -118,7 +118,6 @@ public static class Factory_3D_GrrblSpawner
 		grrbl.layer=10;//playerAI
 		grrbl.GetComponent<AI_Grrbl_Behaviour>().init();
 		grrbl.tag="grrblAI";
-
 			//assign 2 items to the grrbl
 		assignRandomItemsToGrrbl(grrbl,2);
 	}
