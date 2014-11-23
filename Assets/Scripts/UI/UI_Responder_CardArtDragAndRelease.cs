@@ -39,7 +39,6 @@ public class UI_Responder_CardArtDragAndRelease : UIDragDropItem {
 			_card.deactivate();
 			//turn everything off so it can be activated when a card is placed on it
 			Factory_UI_Deck.queueNewCard(_card);
-			Overseer_PlayerMana.spendPlayerMana(_card.cost);
 		}
 
 		gameObject.transform.parent = _card.border;

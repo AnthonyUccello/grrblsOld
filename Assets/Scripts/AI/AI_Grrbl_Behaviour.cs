@@ -112,7 +112,7 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 			return;
 		}
 
-		if(target==null || target.GetComponent<Manager_Grrbl_Stats>()==null)
+		if(target==null || target.GetComponent<Manager_Grrbl_Stats>()==null || target.GetComponent<Manager_Grrbl_Stats>().killed)
 		{
 			_isAttacking = false;
 			_resetAttackTime = true;
@@ -121,14 +121,14 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 			return;
 		}
 
-		if(target.GetComponent<Manager_Grrbl_Stats>().killed)
+		/*if(target.GetComponent<Manager_Grrbl_Stats>().killed)
 		{
 			_isAttacking=false;
 			_resetAttackTime = true;
 			_animator.SetBool("isAttacking",false);
 			_animator.Play ("Idle");
 			return;
-		}
+		}*/
 
 		if(_animatorStateInfo.nameHash != _sAttack_H)
 		{
@@ -144,7 +144,6 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-	
 		if(_path==null)
 		{
 		
@@ -234,5 +233,33 @@ public class AI_Grrbl_Behaviour : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(1f);//its a 30 frame animation
 		Destroy(gameObject);
+	}
+
+	//Changes the walk animation style
+	public void changeWalk(string walkType)
+	{
+		switch (walkType)
+		{
+			case "samurai_walk":
+				_animator.SetBool("samuraiWalk",true); break;
+			case "knight_walk":
+				_animator.SetBool("knightWalk",true); break;
+			default:
+				break;
+		}
+	}
+
+	//Changes the weapon holding attack style (and also the attack)
+	public void changeStance(string stanceType)
+	{
+		switch (stanceType)
+		{
+		case "samurai_stance":
+			_animator.SetBool("samuraiStance",true); break;
+		case "knight_stance":
+			_animator.SetBool("knightStance",true); break;
+		default:
+			break;
+		}
 	}
 }

@@ -36,6 +36,9 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 	bool _canEquipTwoHand;
 	bool _canEquipHelmet;
 
+	//AI
+	AI_Grrbl_Behaviour aiGrrblBehaviour;
+
 	void Awake()
 	{
 		itemGameObjects = new Dictionary<string,GameObject>
@@ -55,6 +58,8 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 		_canEquipOffHand = true;
 		_canEquipTwoHand = true;
 		_canEquipMainHand = true;
+
+		aiGrrblBehaviour = transform.GetComponent<AI_Grrbl_Behaviour>();
 	}
 	
 	//pass it the id of the item
@@ -78,6 +83,12 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 
 		//flag slot as filled
 		removeEquipmentSlotAvailablity((string)item["slot"]);
+	}
+
+	//Change the walk or stance if its ans armor
+	private void updateAnimationBehaviour()
+	{
+
 	}
 
 	//return true if the slot they want to equip to is open

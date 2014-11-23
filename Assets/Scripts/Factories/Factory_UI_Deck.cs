@@ -17,13 +17,14 @@ public static class Factory_UI_Deck {
 	public static void dealFirstHand()
 	{
 		deck = GameObject.FindGameObjectWithTag("deck");
-		for(int i =0;i<6;i++)
+		for(int i =0;i<10;i++)
 		{
-			GameObject card =  GameObject.Instantiate(Resources.Load("Prefabs/UI/CardSlot")) as GameObject;
+			GameObject card =  NGUITools.AddChild(deck,Resources.Load("Prefabs/UI/CardSlot") as GameObject);
 			assignRandomCard(card.GetComponent<UI_Controller_CardSlot>().cardArt);
 			card.transform.parent = deck.transform;
-			card.transform.position = new Vector3(0,0,0);
-			card.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+			card.transform.localScale = new Vector3(0.75f,0.75f,0.75f);
+			//UIPanel display = card.transform.GetComponentInChildren<UIPanel>();
+			//card.transform.position = new Vector3(display.width/2,display.height/2,0);
 			playerCards.Add(card.GetComponent<UI_Controller_CardSlot>().cardArt,false);
 			card.GetComponent<UI_Controller_CardSlot>().cardArt.activate();
 		}

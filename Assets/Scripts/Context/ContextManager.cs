@@ -8,6 +8,5 @@ public class ContextManager : MonoBehaviour {
 		Factory_3D_GrrblSpawner.beginSpawn();
 		Factory_UI_Deck.dealFirstHand();
 		Overseer_PlayerHealth.init();
-		Overseer_PlayerMana.init();
 	}
 }
