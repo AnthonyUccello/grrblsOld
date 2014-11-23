@@ -10,8 +10,6 @@ using System;
 public static class Factory_UI_Deck {
 
 	public static GameObject deck;
-	static Dictionary<UI_Controller_CardArt,bool> playerCards = new Dictionary<UI_Controller_CardArt,bool>();
-	static JsonData[] cards = TypeData.GET_TABLE("cards").rows;
 
 	//Puts cards at the top of the screen
 	public static void dealFirstHand()
@@ -25,7 +23,6 @@ public static class Factory_UI_Deck {
 			card.transform.localScale = new Vector3(0.75f,0.75f,0.75f);
 			//UIPanel display = card.transform.GetComponentInChildren<UIPanel>();
 			//card.transform.position = new Vector3(display.width/2,display.height/2,0);
-			playerCards.Add(card.GetComponent<UI_Controller_CardSlot>().cardArt,false);
 			card.GetComponent<UI_Controller_CardSlot>().cardArt.activate();
 		}
 		
@@ -34,16 +31,19 @@ public static class Factory_UI_Deck {
 
 	static void assignRandomCard(UI_Controller_CardArt card)
 	{
-		//Debug.Log(itemSlot.transform.name);
+		JsonData[] cards = TypeData.GET_TABLE("cards").rows;
 		int rand = UnityEngine.Random.Range(0,cards.Length);
-		//Debug.Log("added " + cards[rand]["name"]);
-		card.cardId = (int)cards[rand]["id"];
-		card.itemId = (int)cards[rand]["item_id"];
+		card.assignNewCard(rand);
 	}
 
+	static public void addNewCard(UI_Controller_CardArt card)
+	{
+		assignRandomCard(card);
+	}
+
+	//To be used for discarding
 	static public void queueNewCard(UI_Controller_CardArt card)
 	{
-		playerCards[card] = true;
 		deck.GetComponent<MonoBehaviour>().StartCoroutine(beginNewCardTime(card));
 	}
 
@@ -51,13 +51,6 @@ public static class Factory_UI_Deck {
 	{
 		//get used cards count
 		int usedCards = 0;
-		foreach(KeyValuePair<UI_Controller_CardArt,bool> kvp in playerCards)
-		{
-			if(kvp.Value==true)
-			{
-				usedCards++;
-			}
-		}
 		yield return new WaitForSeconds(3f*usedCards);
 		assignRandomCard(card);
 		card.activate();

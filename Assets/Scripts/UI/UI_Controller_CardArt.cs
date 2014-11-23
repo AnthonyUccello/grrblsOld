@@ -32,6 +32,14 @@ public class UI_Controller_CardArt : MonoBehaviour
 		_startingLocation = transform.localPosition;
 	}
 
+	public void assignNewCard(int newId)
+	{
+		JsonData[] cards = TypeData.GET_TABLE("cards").rows;
+		cardId = (int)cards[newId]["id"];
+		itemId = (int)cards[newId]["item_id"];
+		updateVisual();
+	}
+
 	//call this after assigning a new item id
 	void updateVisual()
 	{

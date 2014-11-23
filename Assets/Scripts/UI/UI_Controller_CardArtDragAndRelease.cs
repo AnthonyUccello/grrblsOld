@@ -5,7 +5,7 @@ using LitJson;
  * Handles drag event where it checks to see if the item is hovered over and allied Grrbl. If so, instantiate the prefab on it
  * 
  * */
-public class UI_Responder_CardArtDragAndRelease : UIDragDropItem {
+public class UI_Controller_CardArtDragAndRelease : UIDragDropItem {
 
 	public GameObject prefab;
 	private UI_Controller_CardArt _card;
@@ -36,9 +36,10 @@ public class UI_Responder_CardArtDragAndRelease : UIDragDropItem {
 		{
 			grrbl = surface.gameObject.transform;
 			grrbl.GetComponent<Manager_Grrbl_Equipment>().equipItem(_card.itemId);
-			_card.deactivate();
+			Factory_UI_Deck.addNewCard(_card);
+			//_card.deactivate();
 			//turn everything off so it can be activated when a card is placed on it
-			Factory_UI_Deck.queueNewCard(_card);
+			//Factory_UI_Deck.queueNewCard(_card);
 		}
 
 		gameObject.transform.parent = _card.border;
