@@ -20,8 +20,13 @@ public static class Factory_3D_GrrblSpawner
 	static Transform lane2PlayerSpawnSpot = GameObject.Find("lane2PlayerSpawnSpot").transform;
 	static Transform lane3PlayerSpawnSpot = GameObject.Find("lane3PlayerSpawnSpot").transform;
 
-	public static float spawnTimer = 15.0f;
+	public static float spawnTimer = 20f;
 	static string spawnPath = "Prefabs/3D/grrbl";
+
+	static int[] _armor = new int[]{1,4};
+	static int[] _mainHandWeapons = new int[]{0,6};
+	static int[] _offHandWeapons = new int[]{3,7};
+	static int[] _helmets = new int[]{2,5};
 
 	public static void beginSpawn()
 	{
@@ -32,15 +37,8 @@ public static class Factory_3D_GrrblSpawner
 	{
 		while(true)
 		{
-			//spawnPlayerGrrbl(1);
-			spawnAIGrrbl(1);
-
-			//spawnPlayerGrrbl(2);
-			spawnAIGrrbl(2);
-
-			//spawnPlayerGrrbl(3);
-			spawnAIGrrbl(3);
-
+			int rand = Random.Range(1,4);
+			spawnAIGrrbl(rand);
 			yield return new WaitForSeconds(spawnTimer);
 		}
 
@@ -123,14 +121,26 @@ public static class Factory_3D_GrrblSpawner
 
 	static void assignRandomItemsToGrrbl(GameObject grrbl,int amount)
 	{
-		int rand = Random.Range(0,7);
-		if(rand==4)
-		{
-			rand = 3;
-		}
+		Manager_Grrbl_Equipment equip = grrbl.GetComponent<Manager_Grrbl_Equipment>();
+		//get all armor items
+		equip.equipItem(getRandomNumberFromItemIdArray(_armor));
 
-		grrbl.GetComponent<Manager_Grrbl_Equipment>().equipItem(rand);
+		//get offhands
+		equip.equipItem(getRandomNumberFromItemIdArray(_offHandWeapons));
+
+		//get main hands
+		equip.equipItem(getRandomNumberFromItemIdArray(_mainHandWeapons));
+
+		//get helmets
+		equip.equipItem(getRandomNumberFromItemIdArray(_helmets));
 	}
-	
+
+	//Given an array of item ids, returns one index at random
+	static int getRandomNumberFromItemIdArray(int[] array)
+	{
+		int rand = Random.Range(0,array.Length);
+		return array[rand];
+	}	
+
 	
 }
