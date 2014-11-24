@@ -83,10 +83,10 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 	{
 		JsonData[] items = TypeData.GET_TABLE("items").rows;
 		JsonData item = items[itemTypeId];
-		Debug.Log("Item type id prefab is " + itemTypeId);
+		//Debug.Log("Item type id prefab is " + itemTypeId);
 		if(!canEquipItemSlot((string)item["slot"]))
 		{
-			Debug.Log("Item slot is filled");
+			Debug.Log("Item slot is filled " + (string)item["name"]);
 			return;
 		}
 		string prefabName =(string)item["prefab"];

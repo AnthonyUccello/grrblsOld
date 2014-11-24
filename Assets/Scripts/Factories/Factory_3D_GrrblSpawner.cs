@@ -20,13 +20,13 @@ public static class Factory_3D_GrrblSpawner
 	static Transform lane2PlayerSpawnSpot = GameObject.Find("lane2PlayerSpawnSpot").transform;
 	static Transform lane3PlayerSpawnSpot = GameObject.Find("lane3PlayerSpawnSpot").transform;
 
-	public static float spawnTimer = 0.20f;
+	public static float spawnTimer = 10f;
 	static string spawnPath = "Prefabs/3D/grrbl";
 
-	static int[] _armor = new int[]{1,4,9,13};
-	static int[] _mainHandWeapons = new int[]{0,6,10,15};
-	static int[] _offHandWeapons = new int[]{3,7,11};
-	static int[] _helmets = new int[]{2,5,8,14};
+	static int[] _armor = new int[]{1,4,9,12};
+	static int[] _mainHandWeapons = new int[]{0,6,11,14,15};
+	static int[] _offHandWeapons = new int[]{3,7,10};
+	static int[] _helmets = new int[]{2,5,8,13};
 
 	public static void beginSpawn()
 	{
