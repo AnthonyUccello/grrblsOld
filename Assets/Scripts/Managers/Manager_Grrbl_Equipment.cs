@@ -13,18 +13,26 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 	//main hands
 	public GameObject knightSword;
 	public GameObject samuraiKatana;
+	public GameObject cowboyRevolver;
+	public GameObject cowboyRifle;
+	public GameObject vikingAxe;
 
 	//offHands
 	public GameObject samuraiTanto;
 	public GameObject knightShield;
+	public GameObject vikingShield;
 
 	//armor
 	public GameObject knightArmor;
 	public GameObject samuraiArmor;
+	public GameObject vikingArmor;
+	public GameObject cowboyArmor;
 
 	//helmets
 	public GameObject knightHelmet;
 	public GameObject samuraiHelmet;
+	public GameObject vikingHelmet;
+	public GameObject cowboyHelmet;
 
 	//item map
 	private Dictionary<string,GameObject> itemGameObjects;
@@ -45,12 +53,20 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 		{
 			{"knight_sword",knightSword},
 			{"samurai_katana",samuraiKatana},
+			{"cowboy_revolver",cowboyRevolver},
+			{"cowboy_rifle",cowboyRifle},
+			{"viking_axe",vikingAxe},
 			{"samurai_tanto",samuraiTanto},
 			{"knight_shield",knightShield},
+			{"viking_shield",vikingShield},
 			{"knight_armor",knightArmor},
 			{"samurai_armor",samuraiArmor},
+			{"viking_armor",vikingArmor},
+			{"cowboy_armor",cowboyArmor},
 			{"knight_helmet",knightHelmet},
-			{"samurai_helmet",samuraiHelmet}
+			{"samurai_helmet",samuraiHelmet},
+			{"viking_helmet",vikingHelmet},
+			{"cowboy_helmet",cowboyHelmet}
 		};
 
 		_canEquipArmor = true;
@@ -67,13 +83,14 @@ public class Manager_Grrbl_Equipment : MonoBehaviour {
 	{
 		JsonData[] items = TypeData.GET_TABLE("items").rows;
 		JsonData item = items[itemTypeId];
+		Debug.Log("Item type id prefab is " + itemTypeId);
 		if(!canEquipItemSlot((string)item["slot"]))
 		{
 			Debug.Log("Item slot is filled");
 			return;
 		}
 		string prefabName =(string)item["prefab"];
-		//Debug.Log(prefabName);
+		//Debug.Log("Item prefab is " + prefabName);
 		GameObject equippedItem = itemGameObjects[prefabName];
 		equippedItem.SetActive(true);//enable the 3D model
 

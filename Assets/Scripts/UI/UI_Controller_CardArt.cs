@@ -37,6 +37,7 @@ public class UI_Controller_CardArt : MonoBehaviour
 		JsonData[] cards = TypeData.GET_TABLE("cards").rows;
 		cardId = (int)cards[newId]["id"];
 		itemId = (int)cards[newId]["item_id"];
+		//Debug.Log("card art is " + cardId);
 		updateVisual();
 	}
 
@@ -49,9 +50,10 @@ public class UI_Controller_CardArt : MonoBehaviour
 		{
 			Debug.Log("Sprite name " + spriteName + " is not found");
 		}
+		//Debug.Log("Sprite name is " + spriteName);
 		transform.GetComponent<UISprite>().spriteName = spriteName;
-		transform.GetComponentInChildren<UILabel>().text = ((int)cards[cardId]["cost"]).ToString();
-		_cost = (int)cards[cardId]["cost"];
+		transform.GetComponentInChildren<UILabel>().text = "0";
+		_cost = 0;
 	}
 
 	public int cost

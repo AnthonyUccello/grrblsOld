@@ -31,7 +31,6 @@ public class UI_Controller_CardArtDragAndRelease : UIDragDropItem {
 		{
 			Debug.Log("Cannot Afford");
 		}else */
-
 		if (surface != null && surface.tag=="grrblPlayer")
 		{
 			grrbl = surface.gameObject.transform;
